@@ -78,12 +78,12 @@ final class AnyEvaluator implements Evaluator {
   @Override
   public List<RuleViolation.Builder> evaluate(Value val, boolean failFast)
       throws ExecutionException {
-    Message anyValue = val.messageValue();
+    MessageReflector anyValue = val.messageValue();
     if (anyValue == null) {
       return RuleViolation.NO_VIOLATIONS;
     }
     List<RuleViolation.Builder> violationList = new ArrayList<>();
-    String typeURL = (String) anyValue.getField(typeURLDescriptor);
+    String typeURL = anyValue.getField(typeURLDescriptor).jvmValue(String.class);
     if (!in.isEmpty() && !in.contains(typeURL)) {
       RuleViolation.Builder violation =
           RuleViolation.newBuilder()

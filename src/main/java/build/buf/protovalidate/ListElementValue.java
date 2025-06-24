@@ -15,7 +15,6 @@
 package build.buf.protovalidate;
 
 import com.google.protobuf.Descriptors;
-import com.google.protobuf.Message;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -45,15 +44,20 @@ final class ListElementValue implements Value {
   }
 
   @Override
-  public @Nullable Message messageValue() {
+  public @Nullable MessageReflector messageValue() {
     if (fieldDescriptor.getJavaType() == Descriptors.FieldDescriptor.JavaType.MESSAGE) {
-      return (Message) value;
+      return (MessageReflector) value;
     }
     return null;
   }
 
   @Override
-  public <T> T value(Class<T> clazz) {
+  public Object celValue() {
+      return value;
+  }
+
+  @Override
+  public <T> T jvmValue(Class<T> clazz) {
     Descriptors.FieldDescriptor.Type type = fieldDescriptor.getType();
     if (type == Descriptors.FieldDescriptor.Type.MESSAGE) {
       return clazz.cast(value);

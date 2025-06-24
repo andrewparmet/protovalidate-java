@@ -48,8 +48,12 @@ final class OneofEvaluator implements Evaluator {
   @Override
   public List<RuleViolation.Builder> evaluate(Value val, boolean failFast)
       throws ExecutionException {
-    Message message = val.messageValue();
-    if (message == null || !required || (message.getOneofFieldDescriptor(descriptor) != null)) {
+    MessageReflector message = val.messageValue();
+    if (message == null) {
+        return RuleViolation.NO_VIOLATIONS;
+    }
+    boolean hasField = descriptor.getFields().stream().anyMatch(message::hasField);
+    if (!required || hasField) {
       return RuleViolation.NO_VIOLATIONS;
     }
     return Collections.singletonList(
