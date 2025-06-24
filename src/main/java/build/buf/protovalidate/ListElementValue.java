@@ -18,6 +18,8 @@ import com.google.protobuf.Descriptors;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import com.google.protobuf.Message;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -46,7 +48,7 @@ final class ListElementValue implements Value {
   @Override
   public @Nullable MessageReflector messageValue() {
     if (fieldDescriptor.getJavaType() == Descriptors.FieldDescriptor.JavaType.MESSAGE) {
-      return (MessageReflector) value;
+      return new ProtobufMessageReflector((Message) value);
     }
     return null;
   }
