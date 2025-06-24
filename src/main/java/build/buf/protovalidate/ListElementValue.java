@@ -15,11 +15,10 @@
 package build.buf.protovalidate;
 
 import com.google.protobuf.Descriptors;
+import com.google.protobuf.Message;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import com.google.protobuf.Message;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -55,7 +54,7 @@ final class ListElementValue implements Value {
 
   @Override
   public Object celValue() {
-      return value;
+      return ProtoAdapter.scalarToCel(fieldDescriptor.getType(), value);
   }
 
   @Override
