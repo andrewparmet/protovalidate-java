@@ -70,7 +70,7 @@ final class ObjectValue implements Value {
     if (value instanceof Descriptors.EnumValueDescriptor) {
       return clazz.cast(((Descriptors.EnumValueDescriptor) value).getNumber());
     }
-    return clazz.cast(value);
+    return clazz.cast(ProtoAdapter.toCel(fieldDescriptor, value));
   }
 
   @Override
