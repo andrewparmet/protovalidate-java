@@ -38,7 +38,8 @@ import java.util.concurrent.ConcurrentMap;
  */
 final class ValidateLibrary implements CelCompilerLibrary, CelRuntimeLibrary {
 
-  private static final CelOptions CEL_OPTIONS = CelOptions.DEFAULT;
+  private static final CelOptions CEL_OPTIONS =
+      CelOptions.current().enableCelValue(true).build();
 
   private final ConcurrentMap<String, Pattern> patternCache = new ConcurrentHashMap<>();
 

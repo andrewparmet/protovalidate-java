@@ -331,6 +331,7 @@ configure<SpotlessExtension> {
 allprojects {
     version = releaseVersion
     repositories {
+        mavenLocal()
         mavenCentral()
     }
     apply(plugin = "com.diffplug.spotless")
