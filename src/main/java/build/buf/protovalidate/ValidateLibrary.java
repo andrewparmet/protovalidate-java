@@ -45,8 +45,12 @@ import java.util.concurrent.ConcurrentMap;
 final class ValidateLibrary implements CelCompilerLibrary, CelRuntimeLibrary {
 
   // enableHeterogeneousNumericComparisons(true) is required by CelRuntimeImpl (the planner).
+  // enableCelValue(true) lights up the CelValue (StructValue) path used by MessageReflector.
   private static final CelOptions CEL_OPTIONS =
-      CelOptions.current().enableHeterogeneousNumericComparisons(true).build();
+      CelOptions.current()
+          .enableHeterogeneousNumericComparisons(true)
+          .enableCelValue(true)
+          .build();
 
   private final ConcurrentMap<String, Pattern> patternCache = new ConcurrentHashMap<>();
 
